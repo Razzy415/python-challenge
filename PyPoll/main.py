@@ -5,27 +5,10 @@ import sys
 # Path to collect data from the Resources folder
 csvpath = os.path.join('Resources', 'election_data.csv')
 
-
-# My super awesome function for calculating poll data
-#def getPercentages(polldata):
-
-    # Total votes
-    #totalvotes = len(int(polldata[0])) 
-
-    # Vote percentage
-    #votepercentage = (int(polldata[0]) / totalvotes) * 100
-
-    # Print out the wrestler's name and their percentage stats
-    #print("Election Results")
-    #print("-------------------------")
-    #print("Total Votes:", sum(votes))
-    #print("-------------------------")
-   
-
 votes = []
 candidates = []
-uniquecandidates = []
 poll = {}
+votepercentage = []
 
 # Read in the CSV file
 with open(csvpath, newline="") as csvfile:
@@ -42,14 +25,16 @@ with open(csvpath, newline="") as csvfile:
         else:
             poll[row[2]] = 1
 highestvote = max(poll, key=poll.get)
+#print(poll.keys())
 #Print outs
-sys.stdout = open("electionresults.txt", "w")
+sys.stdout = open("electionresults.txt", "a")
 print("Election Results")
 print("-"*25)
 print("Total Votes:", totalvotes)
 print("-"*25)
 for k,v in poll.items():
-    print(k, v)
+    percent = round(float((v/totalvotes)*100), 2)
+    print(k, percent,"%", v,"votes")
 print("-"*25)
 print("Winner:", highestvote, "with", poll[highestvote], "votes")
 print("-"*25)
